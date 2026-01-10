@@ -1,3 +1,12 @@
+# See https://docs.wasmer.io/deployment/reference/wasmer-toml
+[package]
+name = "php-crud/app" # You may want to change this to your own namespace/package name
+version = "0.1.0"
+description = "PHP CRUD application"
+
+# It is highly recommended to use `wasmer secret` for sensitive values
+# See: https://docs.wasmer.io/deployment/reference/secrets
+[package.env]
 DB_HOST = "aws-1-ap-southeast-1.pooler.supabase.com"
 DB_PORT = "5432"
 DB_NAME = "postgres"
