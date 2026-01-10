@@ -1,6 +1,20 @@
 <?php
 // api.php - Place in /public folder
 
+// Temporary debugging: Check environment variables
+header('Content-Type: application/json');
+$env_vars = [
+    'DB_HOST' => getenv('DB_HOST'),
+    'DB_PORT' => getenv('DB_PORT'),
+    'DB_NAME' => getenv('DB_NAME'),
+    'DB_USER' => getenv('DB_USER'),
+    'DB_PASS_IS_SET' => !empty(getenv('DB_PASS')),
+    'MESSAGE' => 'This is a debug response. If you see your DB host, etc., then the env variables are loaded.'
+];
+echo json_encode(['debug_env_variables' => $env_vars]);
+exit;
+
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 0); // Don't display errors directly

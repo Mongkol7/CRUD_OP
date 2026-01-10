@@ -1,0 +1,5 @@
+kind: wasmer.io/App.v0
+name: crud_php
+owner: mongkol7
+package: .
+app_id: da_RxJIdtAUkJp7
