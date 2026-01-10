@@ -1,27 +1,20 @@
--- Create a custom type for status, which is good practice in PostgreSQL
-CREATE TYPE user_status AS ENUM ('ACTIVE', 'INACTIVE');
+-- Drop existing table
+DROP TABLE IF EXISTS public.users CASCADE;
 
--- Create users table
+-- Create users table with email and password
 CREATE TABLE public.users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
-    rate DECIMAL(10,2) DEFAULT 0.00,
-    balance DECIMAL(10,2) DEFAULT 0.00,
-    deposite DECIMAL(10,2) DEFAULT 0.00,
-    status user_status DEFAULT 'ACTIVE',
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Note: The original schema had an automatic 'ON UPDATE' for updated_at.
--- This requires a custom trigger in PostgreSQL. For simplicity, this has been omitted.
--- The application logic should handle updating this field.
-
 -- Insert sample data
-INSERT INTO public.users (name, description, rate, balance, deposite, status) VALUES
-('Reuben Rojas', 'It is a long established fact that a reader will be', 120.00, 300.00, 500.00, 'ACTIVE'),
-('Jonathan Jarrell', 'It is a long established fact that a reader will be', 120.00, -140.00, 500.00, 'INACTIVE'),
-('Marcos Mcleroy', 'It is a long established fact that a reader will be', 120.00, 100.00, 500.00, 'INACTIVE'),
-('Tanner Talbott', 'It is a long established fact that a reader will be', 120.00, 300.00, 500.00, 'ACTIVE'),
-('Bernardo Bair', 'It is a long established fact that a reader will be', 120.00, -170.00, 500.00, 'ACTIVE');
+INSERT INTO public.users (name, email, password) VALUES
+('Reuben Rojas', 'reuben.rojas@example.com', 'password123'),
+('Jonathan Jarrell', 'jonathan.jarrell@example.com', 'password456'),
+('Marcos Mcleroy', 'marcos.mcleroy@example.com', 'password789'),
+('Tanner Talbott', 'tanner.talbott@example.com', 'password123'),
+('Bernardo Bair', 'bernardo.bair@example.com', 'password456');
