@@ -1,16 +1,5 @@
-Yes, that format is mostly correct. I have updated the `wasmer.toml` file to include quotes around the values, which is best practice for TOML.
-
-Your `wasmer.toml` file now contains:
-
-```toml
-[env]
 DB_HOST = "aws-1-ap-southeast-1.pooler.supabase.com"
 DB_PORT = "5432"
 DB_NAME = "postgres"
 DB_USER = "postgres.ewhjmxkowruxlvqkzlyv"
 DB_PASS = "etec18104123"
-```
-
-Remember, even with the correct environment variables, you still need to address the **database schema mismatch**. Your `User.php` model expects `email` and `password` columns that are currently missing from your `users` table as defined in `database/supabase_schema.sql`.
-
-You need to update your Supabase database schema to include these columns for your application to function correctly.
