@@ -459,7 +459,7 @@
     <script>
         // Data storage
         let records = [];
-        const API_URL = '/crud_php/public/api.php';
+        const API_URL = 'api.php';
 
         // Toggle form visibility
         function toggleForm() {
