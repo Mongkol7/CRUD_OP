@@ -171,6 +171,12 @@ try {
         'success' => false,
         'message' => 'Server error: ' . $e->getMessage(),
         'file' => $e->getFile(),
-        'line' => $e->getLine()
+        'line' => $e->getLine(),
+        'env_check' => [
+            'DB_HOST' => getenv('DB_HOST') ?: 'NOT_SET',
+            'DB_PORT' => getenv('DB_PORT') ?: 'NOT_SET',
+            'DB_NAME' => getenv('DB_NAME') ?: 'NOT_SET',
+            'DB_USER' => getenv('DB_USER') ? 'SET' : 'NOT_SET'
+        ]
     ]);
 }
