@@ -7,18 +7,21 @@ Using pooler connection which adds 15-20 seconds latency per request.
 
 ## Solution Options
 
-### Option 1: Use Direct Connection (Recommended)
-In your Railway project settings → Variables, update these values:
+### Option 1: Use Session Pooler (Recommended)
+In your Railway project settings → Variables, use these values:
 
 ```
-DB_HOST=aws-0-ap-southeast-1.pooler.supabase.com
-DB_PORT=6543
+DB_HOST=aws-1-ap-southeast-1.pooler.supabase.com
+DB_PORT=5432
 DB_NAME=postgres
 DB_USER=postgres.ewhjmxkowruxlvqkzlyv
 DB_PASS=etec18104123
 ```
 
-**Note:** Change port from 5432 to **6543** (direct connection mode)
+**Important:**
+- Port should be **5432** (session pooler)
+- Make sure Supabase pooler is set to "Session" mode (not Transaction mode)
+- Session pooler is IPv4 compatible which works better with Railway
 
 ### Option 2: Use Session Mode Pooler
 If Option 1 doesn't work, keep port 5432 but ensure your Supabase pooler is in **Session Mode**:
