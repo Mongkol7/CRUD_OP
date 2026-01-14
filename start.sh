@@ -15,8 +15,8 @@ else
     exec php -S 0.0.0.0:$PORT -t /app/public
 fi
 
-# Start PHP-FPM in background
-$PHP_FPM -y /app/php-fpm.conf -F &
+# Start PHP-FPM in background (allow root with -R flag)
+$PHP_FPM -y /app/php-fpm.conf -R -F &
 
 # Wait for PHP-FPM to start
 sleep 2
