@@ -288,6 +288,28 @@
                 transform: translateY(0);
             }
         }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #2a3441;
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="min-h-screen p-8">
@@ -437,7 +459,7 @@
     <script>
         // Data storage
         let records = [];
-        const API_URL = 'api.php';
+        const API_URL = '/crud_php/public/api.php';
 
         // Toggle form visibility
         function toggleForm() {
@@ -453,6 +475,18 @@
 
         // Load records from API
         async function loadRecords() {
+            const tbody = document.getElementById('recordsTableBody');
+
+            // Show loading state
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="text-center py-12">
+                        <div class="spinner" style="margin: 0 auto 12px;"></div>
+                        <div style="color: #9ca3af;">Loading records...</div>
+                    </td>
+                </tr>
+            `;
+
             try {
                 const response = await fetch(API_URL);
                 const result = await response.json();
@@ -462,9 +496,23 @@
                     renderRecords();
                 } else {
                     console.error('Failed to load records');
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="text-center py-12" style="color: #ef4444;">
+                                Failed to load records. Please try again.
+                            </td>
+                        </tr>
+                    `;
                 }
             } catch (error) {
                 console.error('Error loading records:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center py-12" style="color: #ef4444;">
+                            Error loading records. Please check your connection.
+                        </td>
+                    </tr>
+                `;
             }
         }
 
@@ -473,6 +521,13 @@
             e.preventDefault();
 
             const recordId = document.getElementById('recordId').value;
+            const submitBtn = e.submitter || document.querySelector('#crudForm button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+
+            // Show loading state
+            submitBtn.innerHTML = '<span class="spinner"></span> <span style="margin-left: 8px;">Saving...</span>';
+            submitBtn.classList.add('btn-loading');
+
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
@@ -536,6 +591,10 @@
                     color: '#e1e8ed',
                     confirmButtonColor: '#10b981'
                 });
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.classList.remove('btn-loading');
             }
         });
 
@@ -618,6 +677,16 @@
             });
 
             if (result.isConfirmed) {
+                // Show loading alert
+                Swal.fire({
+                    title: 'Deleting...',
+                    html: '<div class="spinner" style="margin: 20px auto;"></div>',
+                    background: '#1a1f2e',
+                    color: '#e1e8ed',
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+
                 try {
                     const response = await fetch(API_URL, {
                         method: 'DELETE',
