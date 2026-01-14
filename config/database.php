@@ -21,8 +21,9 @@ class Database {
 
         try {
             // Build connection string for Supabase PostgreSQL
+            // Add options to optimize connection speed
             $dsn = sprintf(
-                'pgsql:host=%s;port=%s;dbname=%s;sslmode=require',
+                'pgsql:host=%s;port=%s;dbname=%s;sslmode=require;connect_timeout=5;application_name=railway_app',
                 $this->host,
                 $this->port,
                 $this->db_name
@@ -35,13 +36,12 @@ class Database {
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_PERSISTENT => true,  // Use persistent connections
+                    PDO::ATTR_TIMEOUT => 5  // Connection timeout 5 seconds
                 ]
             );
-            
-            // Test the connection
-            $this->conn->query('SELECT 1');
-            
+
         } catch(PDOException $e) {
             // Log error to PHP error log instead of echoing
             error_log('Database Connection Error: ' . $e->getMessage());

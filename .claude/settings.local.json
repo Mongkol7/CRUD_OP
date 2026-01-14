@@ -6,7 +6,21 @@
       "Bash(psql:*)",
       "Bash(\"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\":*)",
       "Bash(set PGPASSWORD=123:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(php -r:*)",
+      "Bash(php test_connection.php:*)",
+      "Bash(curl:*)",
+      "Bash(wasmer:*)",
+      "Bash(railway --version:*)",
+      "Bash(npm install:*)",
+      "Bash(railway login:*)",
+      "Bash(cat:*)",
+      "Bash(railway domain:*)",
+      "Bash(chmod:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }
