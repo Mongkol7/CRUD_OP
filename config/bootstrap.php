@@ -2,8 +2,9 @@
 
 function loadDotEnv($path)
 {
+    // Skip if file doesn't exist (e.g., on Railway where env vars are set via platform)
     if (!file_exists($path)) {
-        throw new InvalidArgumentException(sprintf('%s does not exist', $path));
+        return;
     }
 
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
