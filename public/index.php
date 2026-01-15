@@ -310,6 +310,95 @@
             cursor: not-allowed;
             pointer-events: none;
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem !important;
+            }
+
+            .glass-card {
+                padding: 1rem !important;
+            }
+
+            /* Stack header items on mobile */
+            .header-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .search-box {
+                width: 100% !important;
+            }
+
+            /* Make table responsive */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            /* Smaller padding on mobile */
+            tbody td, thead th {
+                padding: 0.75rem 0.5rem !important;
+                font-size: 0.875rem;
+            }
+
+            /* Adjust button sizes */
+            .btn-edit, .btn-delete {
+                padding: 4px 12px !important;
+                font-size: 0.75rem !important;
+            }
+
+            /* Form adjustments */
+            #formCard {
+                padding: 1.5rem !important;
+            }
+
+            h2 {
+                font-size: 1.25rem !important;
+            }
+
+            /* Mobile-friendly inputs */
+            input, textarea, select {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+
+            /* Liquid shapes - smaller on mobile */
+            .liquid-shape:nth-child(1) {
+                width: 250px !important;
+                height: 250px !important;
+            }
+
+            .liquid-shape:nth-child(2) {
+                width: 300px !important;
+                height: 300px !important;
+            }
+
+            .liquid-shape:nth-child(3) {
+                width: 200px !important;
+                height: 200px !important;
+            }
+        }
+
+        /* Tablet styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .glass-card {
+                padding: 1.5rem !important;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen p-8">
@@ -323,14 +412,14 @@
     <div class="max-w-7xl mx-auto">
         <!-- Header with Search and Add Button -->
         <div class="glass-card rounded-lg p-6 mb-6">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-4">
+            <div class="flex justify-between items-center header-controls">
+                <div class="flex items-center gap-4 search-controls">
                     <input type="text" placeholder="Search..." class="search-box" id="searchInput">
                     <input type="text" placeholder="Filter..." class="search-box">
                 </div>
                 <button
                     onclick="toggleForm()"
-                    class="btn-primary px-6 py-2 rounded-lg font-medium flex items-center gap-2"
+                    class="btn-primary px-6 py-2 rounded-lg font-medium flex items-center gap-2 w-full sm:w-auto"
                     id="toggleFormBtn"
                 >
                     <span>+ Add Record</span>
@@ -396,17 +485,17 @@
                     </div>
                 </div>
 
-                <div class="flex gap-3 justify-end pt-4">
+                <div class="flex flex-col sm:flex-row gap-3 justify-end pt-4">
                     <button
                         type="button"
                         onclick="resetForm()"
-                        class="btn-outline px-6 py-2 rounded-lg font-medium text-sm"
+                        class="btn-outline px-6 py-2 rounded-lg font-medium text-sm w-full sm:w-auto"
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
-                        class="btn-primary px-6 py-2 rounded-lg font-medium text-sm"
+                        class="btn-primary px-6 py-2 rounded-lg font-medium text-sm w-full sm:w-auto"
                     >
                         Save Record
                     </button>
@@ -416,7 +505,7 @@
 
         <!-- Records Table -->
         <div class="glass-card rounded-lg p-6">
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto table-responsive">
                 <table class="w-full">
                     <thead>
                         <tr>
