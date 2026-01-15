@@ -221,7 +221,14 @@
             padding: 8px 16px;
             border-radius: 8px;
             color: #e1e8ed;
-            width: 200px;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.2s ease;
+        }
+
+        .search-box:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
 
         .icon-btn {
@@ -414,8 +421,7 @@
         <div class="glass-card rounded-lg p-6 mb-6">
             <div class="flex justify-between items-center header-controls">
                 <div class="flex items-center gap-4 search-controls">
-                    <input type="text" placeholder="Search..." class="search-box" id="searchInput">
-                    <input type="text" placeholder="Filter..." class="search-box">
+                    <input type="text" placeholder="Search by name or email..." class="search-box" id="searchInput">
                 </div>
                 <button
                     onclick="toggleForm()"
@@ -687,25 +693,35 @@
             }
         });
 
-        // Render records table
-        function renderRecords() {
+        // Render records table with optional search filter
+        function renderRecords(searchTerm = '') {
             const tbody = document.getElementById('recordsTableBody');
             const countSpan = document.getElementById('recordCount');
 
-            countSpan.textContent = records.length;
+            // Filter records based on search term
+            let filteredRecords = records;
+            if (searchTerm) {
+                const search = searchTerm.toLowerCase();
+                filteredRecords = records.filter(record =>
+                    record.name.toLowerCase().includes(search) ||
+                    record.email.toLowerCase().includes(search)
+                );
+            }
 
-            if (records.length === 0) {
+            countSpan.textContent = filteredRecords.length;
+
+            if (filteredRecords.length === 0) {
                 tbody.innerHTML = `
                     <tr class="table-row">
                         <td colspan="4" class="text-center py-12" style="color: #6b7280;">
-                            No records found. Click "+ Add Record" to create your first record.
+                            ${searchTerm ? 'No records match your search.' : 'No records found. Click "+ Add Record" to create your first record.'}
                         </td>
                     </tr>
                 `;
                 return;
             }
 
-            tbody.innerHTML = records.map((record, index) => {
+            tbody.innerHTML = filteredRecords.map((record, index) => {
                 return `
                 <tr class="table-row">
                     <td class="py-3 px-4 text-sm">
@@ -879,6 +895,13 @@
                 `;
             }
         }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value;
+            renderRecords(searchTerm);
+        });
 
         // Load records on page load
         loadRecords();
